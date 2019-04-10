@@ -5,7 +5,7 @@ import Home from './Components/Home';
 
 export default (
     <Switch>
-        <Route path='/dashboard/:path' component={Dashboard}/>
+        <Route path='/dashboard' component={Dashboard}/>
         <Route exact path='/' component={Home} />
     </Switch>
 )

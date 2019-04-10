@@ -22,6 +22,10 @@ import Closet from '../Components/Closet';
 import Collection from '../Components/Collection';
 import Community from '../Components/Community';
 import Shop from '../Components/Shop';
+import Logout from '@material-ui/icons/ExitToApp';
+import Search from '@material-ui/icons/Search';
+import Chat from '@material-ui/icons/Forum';
+import Settings from '@material-ui/icons/Settings';
 import { ListItemText, ListItemIcon, ListItem } from '@material-ui/core';
 import {Route} from 'react-router-dom';
 
@@ -29,11 +33,16 @@ const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
+    boxSizing:'borderBox',
     display: 'flex',
+    margin:0,
+    padding:0
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
-    background: 'black'
+    background: 'black',
+    display:'flex',
+    justifyContent:'space-evenly',
   },
   toolbarIcon: {
     background:'black',
@@ -61,6 +70,11 @@ const styles = theme => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 36,
+    '&:hover':{
+        background:'blue',
+        borderRadius:0,
+        // width:'55px'
+      }
   },
   menuButtonHidden: {
     display: 'none',
@@ -98,17 +112,40 @@ const styles = theme => ({
   chartContainer: {
     marginLeft: -22,
   },
-  tableContainer: {
-    height: 320,
-  },
   h5: {
     marginBottom: theme.spacing.unit * 2,
   },
-  listText:{
-      background:'white',
-      
+  iconButtons:{
+    // background:'black',
+    // '&:hover':{
+    //     background:'blue',
+    //   }
+  },
+  chevronIcon:{
+    //   background:'blue',
+    // '&:hover':{
+    //     background:'blue',
+    //     borderRadius:0,
+    //     width:'255px',
+    //     display:'flex',
+    //     justifyContent:'flex-end'
+    //   }
+  },
 
+  inputHolder:{
+    "&::-webkit-input-placeholder": {
+        color: 'white'
+    },
+    '&:focus':{
+        outline:'none'
+    }
+  },
+  searchButton:{
+    '&:focus':{
+        outline:'none'
+    } 
   }
+
 });
 
 class Dashboard extends React.Component {
@@ -144,8 +181,13 @@ class Dashboard extends React.Component {
                 this.state.open && classes.menuButtonHidden,
               )}
             >
-            <MenuIcon style={{color:'white'}}/>
+                <MenuIcon  style={{color:'white'}}/>
             </IconButton>
+            
+            <form style={{borderRadius:'16px',background:'white',width:'20vw',height:'100%',display:'flex',justifyContent:'center',background:'#2c3539'}}>
+                <input className={classes.inputHolder} placeholder="Search" style={{width:'78%',height:'40px',fontSize:'20px',background:'#2c3539',border:'transparent',color:'white'}}/>
+                <button className={classes.searchButton} style={{background:'#2c3539',border:'transparent'}}><Search style={{color:'white'}}/></button>
+            </form>
             <Typography
               component="h1"
               variant="h6"
@@ -153,12 +195,14 @@ class Dashboard extends React.Component {
               noWrap
               className={classes.title}
               >
-              
-              DeadStock
+             
+              DeadStock  
 
             </Typography>
-              <div>Messages</div>
-              <div>Settings</div>
+            <div style={{display:'flex',width:'15%',justifyContent:'space-between'}}>
+              <Chat/>
+              <Settings/>
+            </div>
             {/* <IconButton color="inherit">
               <Badge badgeContent={0} color="secondary">
                 <NotificationsIcon />
@@ -166,6 +210,7 @@ class Dashboard extends React.Component {
             </IconButton> */}
           </Toolbar>
         </AppBar>
+
         <Drawer 
         style={{background:'black'}}
           variant="permanent"
@@ -176,45 +221,57 @@ class Dashboard extends React.Component {
         >
 
           <div style={{background:'black'}} className={classes.toolbarIcon}>
-            <IconButton onClick={this.handleDrawerClose}>
+            <IconButton className={classes.chevronIcon} onClick={this.handleDrawerClose}>
               <ChevronLeftIcon style={{color:'white'}} />
             </IconButton>
           </div>
           <Divider />
-            <div>
-                
-                <ListItem button style={{background:'black'}} onClick={() => this.props.history.push('/dashboard/closet')}>
+
+          {/* This is the entire nav sidebar beneath the divider */}
+            <div style={{background:'black',height:'calc(92vh)',display:'flex',flexDirection:'column',justifyContent:'space-between'}}> 
+                <div>
+                    <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/dashboard/closet')}>
+                        <ListItemIcon>
+                          <MeetingRoom style={{color:'white'}}/>
+                        </ListItemIcon>
+                        <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'30px'}}> Closet</Typography>}/>
+                    </ListItem>
+
+              {/* <Divider /> */}
+
+                    <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/dashboard/collection')}>
+                        <ListItemIcon>
+                          <Favorite style={{color:'white'}}/>
+                        </ListItemIcon>
+                        <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'30px'}}> Collection </Typography>}/>
+                    </ListItem>
+
+              {/* <Divider /> */}
+
+                    <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/dashboard/community')}>
+                      <ListItemIcon>
+                        <Public style={{color:'white'}}/>
+                      </ListItemIcon>
+                      <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'30px'}}> Community</Typography>} />
+                      {/* <ListItemText classes={{color:classes.listItemFont}} primary="Community" /> */}
+                    </ListItem>
+              {/* <Divider /> */}
+
+                    <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/dashboard/shop')}>
+                      <ListItemIcon>
+                        <ShoppingCart style={{color:'white'}}/>
+                      </ListItemIcon>
+                      <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'30px'}}> Shop</Typography>}/>
+                    </ListItem>
+                </div>
+                <div>
+                  <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/')}>
                     <ListItemIcon>
-                    <MeetingRoom style={{color:'white'}}/>
+                      <Logout style={{color:'white'}}/>
                     </ListItemIcon>
-                    <ListItemText className={classes.listText} primary="Closet" style={{color:"white"}}/>
-                </ListItem>
-
-          <Divider />
-
-                <ListItem button style={{background:'black'}} onClick={() => this.props.history.push('/dashboard/collection')}>
-                    <ListItemIcon>
-                    <Favorite style={{color:'white'}}/>
-                    </ListItemIcon>
-                    <ListItemText primary="Collection"/>
-                </ListItem>
-
-          <Divider />
-
-                <ListItem button style={{background:'navy'}} onClick={() => this.props.history.push('/dashboard/community')}>
-                  <ListItemIcon>
-                  <Public style={{color:'white'}}/>
-                  </ListItemIcon>
-                  <ListItemText primary="Community"/>
-                </ListItem>
-          <Divider />
-
-                <ListItem button style={{background:'black'}} onClick={() => this.props.history.push('/dashboard/shop')}>
-                  <ListItemIcon>
-                  <ShoppingCart style={{color:'white'}}/>
-                  </ListItemIcon>
-                  <ListItemText primary="Shop"/>
-                </ListItem>
+                    <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'30px'}}> Logout</Typography>}/>
+                  </ListItem>
+                </div>
             </div>
 
         </Drawer>
