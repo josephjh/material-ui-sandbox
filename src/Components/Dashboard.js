@@ -43,7 +43,6 @@ const styles = theme => ({
     background: 'black',
     display:'flex',
     justifyContent:'space-evenly',
-    // width:'100vw'
   },
   toolbarIcon: {
     background:'black',
