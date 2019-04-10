@@ -6,6 +6,7 @@ import Home from './Components/Home';
 export default (
     <Switch>
         <Route path='/dashboard' component={Dashboard}/>
+        {/* <Route path='/dashboard/:path' component={Dashboard}/> */}
         <Route exact path='/' component={Home} />
     </Switch>
 )

@@ -17,7 +17,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import Public from '@material-ui/icons/Public';
 import MeetingRoom from '@material-ui/icons/MeetingRoom';
-import Favorite from '@material-ui/icons/FavoriteBorder';
+import Favorite from '@material-ui/icons/Favorite';
 import Closet from '../Components/Closet';
 import Collection from '../Components/Collection';
 import Community from '../Components/Community';
@@ -28,23 +28,28 @@ import Chat from '@material-ui/icons/Forum';
 import Settings from '@material-ui/icons/Settings';
 import { ListItemText, ListItemIcon, ListItem } from '@material-ui/core';
 import {Route} from 'react-router-dom';
+import Paper from '@material-ui/core/Paper';
 
 const drawerWidth = 240;
+const image = 'https://images.unsplash.com/photo-1494122353634-c310f45a6d3c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
 
 const styles = theme => ({
   root: {
     boxSizing:'borderBox',
     display: 'flex',
     margin:0,
-    padding:0
+    padding:0,
+    // height:'100vh'
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
     background: 'black',
     display:'flex',
     justifyContent:'space-evenly',
+    borderBottom:'white solid 1px'
   },
   toolbarIcon: {
+    borderBottom:'white 1px solid',
     background:'black',
     display: 'flex',
     alignItems: 'center',
@@ -70,11 +75,11 @@ const styles = theme => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 36,
-    '&:hover':{
-        background:'blue',
-        borderRadius:0,
-        // width:'55px'
-      }
+    // '&:hover':{
+    //     background:'blue',
+    //     borderRadius:0,
+    //     // width:'55px'
+    //   }
   },
   menuButtonHidden: {
     display: 'none',
@@ -105,9 +110,10 @@ const styles = theme => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    height: '100vh',
-    overflow: 'auto',
+    padding: theme.spacing.unit - 8,
+    maxHeight: '100vh',
+    overflow: 'hidden',
+    // overflowY:'scroll'
   },
   chartContainer: {
     marginLeft: -22,
@@ -117,11 +123,12 @@ const styles = theme => ({
   },
   iconButtons:{
     // background:'black',
-    // '&:hover':{
-    //     background:'blue',
-    //   }
+    '&:hover':{
+        background:'blue',
+      }
   },
   chevronIcon:{
+    border:'white 1px dashed'
     //   background:'blue',
     // '&:hover':{
     //     background:'blue',
@@ -144,6 +151,16 @@ const styles = theme => ({
     '&:focus':{
         outline:'none'
     } 
+  },
+  paperContainer:{
+    backgroundImage:`url(${image})`,
+    height:'91vh',
+    width:'100%',
+    overflow:'hidden',
+    backgroundRepeat:'no-repeat',
+    zIndex:0
+    // position:'fixed'
+    
   }
 
 });
@@ -163,7 +180,7 @@ class Dashboard extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props, 22222)
+    // console.log( 22222)
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -190,16 +207,18 @@ class Dashboard extends React.Component {
             </form>
             <Typography
               component="h1"
-              variant="h6"
+              variant="h5"
               color="inherit"
               noWrap
+              style={{fontSize:'45px'}}
+    
               className={classes.title}
               >
              
               DeadStock  
 
             </Typography>
-            <div style={{display:'flex',width:'15%',justifyContent:'space-between'}}>
+            <div style={{display:'flex',width:'15%',justifyContent:'space-around'}}>
               <Chat/>
               <Settings/>
             </div>
@@ -225,16 +244,17 @@ class Dashboard extends React.Component {
               <ChevronLeftIcon style={{color:'white'}} />
             </IconButton>
           </div>
-          <Divider />
+          {/* <Divider /> */}
 
           {/* This is the entire nav sidebar beneath the divider */}
-            <div style={{background:'black',height:'calc(92vh)',display:'flex',flexDirection:'column',justifyContent:'space-between'}}> 
+            <div style={{background:'black',height:'90.7vh',display:'flex',flexDirection:'column',justifyContent:'space-between'}}> 
                 <div>
                     <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/dashboard/closet')}>
                         <ListItemIcon>
-                          <MeetingRoom style={{color:'white'}}/>
+                          {/* <MeetingRoom style={{color:'white'}}/> */}
+                          <i className="fas fa-door-closed" style={{color:'white',fontSize:'20px'}}></i>
                         </ListItemIcon>
-                        <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'30px'}}> Closet</Typography>}/>
+                        <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'25px'}}> Closet</Typography>}/>
                     </ListItem>
 
               {/* <Divider /> */}
@@ -243,7 +263,7 @@ class Dashboard extends React.Component {
                         <ListItemIcon>
                           <Favorite style={{color:'white'}}/>
                         </ListItemIcon>
-                        <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'30px'}}> Collection </Typography>}/>
+                        <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'25px'}}> Collection </Typography>}/>
                     </ListItem>
 
               {/* <Divider /> */}
@@ -252,7 +272,7 @@ class Dashboard extends React.Component {
                       <ListItemIcon>
                         <Public style={{color:'white'}}/>
                       </ListItemIcon>
-                      <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'30px'}}> Community</Typography>} />
+                      <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'25px'}}> Community</Typography>} />
                       {/* <ListItemText classes={{color:classes.listItemFont}} primary="Community" /> */}
                     </ListItem>
               {/* <Divider /> */}
@@ -261,7 +281,7 @@ class Dashboard extends React.Component {
                       <ListItemIcon>
                         <ShoppingCart style={{color:'white'}}/>
                       </ListItemIcon>
-                      <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'30px'}}> Shop</Typography>}/>
+                      <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'25px'}}> Shop</Typography>}/>
                     </ListItem>
                 </div>
                 <div>
@@ -269,7 +289,7 @@ class Dashboard extends React.Component {
                     <ListItemIcon>
                       <Logout style={{color:'white'}}/>
                     </ListItemIcon>
-                    <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'30px'}}> Logout</Typography>}/>
+                    <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'25px'}}> Logout</Typography>}/>
                   </ListItem>
                 </div>
             </div>
@@ -277,10 +297,14 @@ class Dashboard extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-            <Route path='/dashboard/closet' component={Closet} />
-            <Route path='/dashboard/collection' component={Collection} />
-            <Route path='/dashboard/community' component={Community} />
-            <Route path='/dashboard/shop' component={Shop} />
+            <Paper className={classes.paperContainer}>
+              <Route path='/dashboard/closet' component={Closet}/>
+              <Route path='/dashboard/collection' component={Collection}/>
+              <Route path='/dashboard/community' component={Community} />
+              <Route path='/dashboard/shop' component={Shop} />
+            </Paper>
+
+            <img className={classes.backgroundImage}/>
           {/* <Typography variant="h4" gutterBottom component="h2">
             Orders
           </Typography> */}
